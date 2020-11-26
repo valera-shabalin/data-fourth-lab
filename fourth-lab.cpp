@@ -1,8 +1,13 @@
 ﻿#include <iostream>
 
-int main() {
+#include "Tree.h"
+
+using namespace std;
+
+int main() 
+{
     setlocale(LC_CTYPE, "Rus");
 
-
+    
 }
 
