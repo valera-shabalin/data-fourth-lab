@@ -1,25 +1,25 @@
 #ifndef _TREE_H
 #define _TREE_H
 
-namespace tree 
+class Tree 
 {
-	class Tree 
-	{
-		friend class TreeNode;
-	private:
-		class TreeNode* Root;
-	public:
-		/* Конструктор и деструктор */
-		Tree();
-		~Tree();
+	friend class TreeNode;
+private:
+	class TreeNode* Root;
+	size_t count;
+public:
+	/* Конструктор и деструктор */
+	Tree();
+	~Tree();
 
-		/* Основные методы */
-		TreeNode* get_max();
-		TreeNode* get_min();
+	/* Основные методы */
+	bool IsEmpty() const;
+	TreeNode& GetMax(TreeNode* Root = nullptr) const;
+	TreeNode& GetMin(TreeNode* Root = nullptr) const;
+	Tree& InsertNode(int value);
 
-		/* Геттеры */
-		TreeNode* get_root() const;
-	};
-}
+	/* Геттеры */
+	TreeNode* GetRoot() const;
+};
 
 #endif

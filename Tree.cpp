@@ -2,37 +2,70 @@
 #include "TreeNode.h"
 
 using namespace std;
-using namespace tree_node;
 
-namespace tree 
+/* Конструктор */
+Tree::Tree() 
 {
-	/* Конструктор */
-	Tree::Tree() 
+	this->Root = nullptr;
+	this->count = 0;
+}
+
+/* Деструктор TODO */
+Tree::~Tree() 
+{
+	this->count = 0;
+}
+
+/* Проверить дерево на пустоту */
+bool Tree::IsEmpty() const
+{
+	return this->Root == nullptr;
+}
+
+/* Получить наибольший элемент в дереве */
+TreeNode& Tree::GetMax(TreeNode* Root) const
+{
+	Root = (Root == nullptr) ? this->Root : Root;
+
+	while (Root->RightChild != nullptr)
 	{
-		this->Root = nullptr;
+		Root = Root->RightChild;
 	}
 
-	/* Деструктор */
-	Tree::~Tree() 
+	return *Root;
+}
+
+/* Получить наименьший элемент в дереве */
+TreeNode& Tree::GetMin(TreeNode* Root) const
+{
+	Root = (Root == nullptr) ? this->Root : Root;
+
+	while (Root->LeftChild != nullptr)
+	{
+		Root = Root->LeftChild;
+	}
+
+	return *Root;
+}
+
+/* Вставить элемент в дерево */
+Tree& Tree::InsertNode(int value) {
+	TreeNode* NewNode = new TreeNode(value);
+
+	if (this->IsEmpty())
+	{
+		this->Root = NewNode;
+	}
+	else 
 	{
 
 	}
 
-	/* Получить наибольший элемент в дереве */
-	TreeNode* Tree::get_max()
-	{
-		
-	}
+	return *this;
+}
 
-	/* Получить наименьший элемент в дереве */
-	TreeNode* Tree::get_min()
-	{
-
-	}
-
-	/* Геттеры */
-	TreeNode* Tree::get_root() const 
-	{
-		return this->Root;
-	}
+/* Геттеры */
+TreeNode* Tree::GetRoot() const 
+{
+	return this->Root;
 }
