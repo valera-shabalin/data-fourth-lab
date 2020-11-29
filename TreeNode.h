@@ -13,6 +13,9 @@ public:
 	TreeNode(int data = 0);
 	~TreeNode();
 
+	/* Основные методы */
+	TreeNode& InsertChild(int value);
+
 	/* Геттеры */
 	int GetData() const;
 	TreeNode& GetLeftChild() const;

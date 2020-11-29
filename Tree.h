@@ -20,6 +20,7 @@ public:
 
 	/* Геттеры */
 	TreeNode* GetRoot() const;
+	size_t GetCount() const;
 };
 
 #endif

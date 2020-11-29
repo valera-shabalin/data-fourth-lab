@@ -17,6 +17,34 @@ TreeNode::~TreeNode()
 	this->LeftChild = this->RightChild = nullptr;
 }
 
+/* Вставить потомка в узел */
+TreeNode& TreeNode::InsertChild(int value) {
+	if (value < this->data)
+	{
+		if (this->LeftChild != nullptr)
+		{
+			this->InsertChild(value);
+		}
+		else
+		{
+			this->LeftChild = new TreeNode(value);
+		}
+	}
+	else
+	{
+		if (this->RightChild != nullptr)
+		{
+			this->InsertChild(value);
+		}
+		else
+		{
+			this->RightChild = new TreeNode(value);
+		}
+	}
+
+	return *this;
+}
+
 /* Геттеры */
 int TreeNode::GetData() const 
 {

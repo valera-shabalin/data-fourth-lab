@@ -50,16 +50,16 @@ TreeNode& Tree::GetMin(TreeNode* Root) const
 
 /* Вставить элемент в дерево */
 Tree& Tree::InsertNode(int value) {
-	TreeNode* NewNode = new TreeNode(value);
-
 	if (this->IsEmpty())
 	{
-		this->Root = NewNode;
+		this->Root = new TreeNode(value);
 	}
-	else 
+	else
 	{
-
+		this->Root->InsertChild(value);
 	}
+
+	this->count++;
 
 	return *this;
 }
@@ -68,4 +68,8 @@ Tree& Tree::InsertNode(int value) {
 TreeNode* Tree::GetRoot() const 
 {
 	return this->Root;
+}
+size_t Tree::GetCount() const
+{
+	return this->count;
 }
