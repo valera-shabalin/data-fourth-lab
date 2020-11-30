@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Tree.h"
 #include "TreeNode.h"
 
@@ -23,44 +25,77 @@ bool Tree::IsEmpty() const
 }
 
 /* Получить наибольший элемент в дереве */
-TreeNode& Tree::GetMax(TreeNode* Root) const
+int Tree::GetMax() const
 {
-	Root = (Root == nullptr) ? this->Root : Root;
+	TreeNode* Tmp = this->Root;
 
-	while (Root->RightChild != nullptr)
+	while (Tmp->RightChild != nullptr)
 	{
-		Root = Root->RightChild;
+		Tmp = Tmp->RightChild;
 	}
 
-	return *Root;
+	return Tmp->data;
 }
 
 /* Получить наименьший элемент в дереве */
-TreeNode& Tree::GetMin(TreeNode* Root) const
+int Tree::GetMin() const
 {
-	Root = (Root == nullptr) ? this->Root : Root;
+	TreeNode* Tmp = this->Root;
 
-	while (Root->LeftChild != nullptr)
+	while (Tmp->LeftChild != nullptr)
 	{
-		Root = Root->LeftChild;
+		Tmp = Tmp->LeftChild;
 	}
 
-	return *Root;
+	return Tmp->data;
 }
 
 /* Вставить элемент в дерево */
-Tree& Tree::InsertNode(int value) {
+Tree& Tree::InsertNode(int data) 
+{
 	if (this->IsEmpty())
 	{
-		this->Root = new TreeNode(value);
+		this->Root = new TreeNode(data);
 	}
 	else
 	{
-		this->Root->InsertChild(value);
+		this->InsertNodeHelper(*this->Root, data);
 	}
 
 	this->count++;
 
+	return *this;
+}
+
+void Tree::InsertNodeHelper(TreeNode& Root, int data) 
+{
+	if (data < Root.data)
+	{
+		if (Root.LeftChild != nullptr)
+		{
+			InsertNodeHelper(*Root.LeftChild, data);
+		}
+		else
+		{
+			Root.LeftChild = new TreeNode(data);
+		}
+	}
+	else
+	{
+		if (Root.RightChild != nullptr)
+		{
+			InsertNodeHelper(*Root.RightChild, data);
+		}
+		else
+		{
+			Root.RightChild = new TreeNode(data);
+		}
+	}
+}
+
+/* Удалить элемент из дерева TODO */
+Tree& Tree::DeleteNode() 
+{
 	return *this;
 }
 
@@ -69,6 +104,7 @@ TreeNode* Tree::GetRoot() const
 {
 	return this->Root;
 }
+
 size_t Tree::GetCount() const
 {
 	return this->count;

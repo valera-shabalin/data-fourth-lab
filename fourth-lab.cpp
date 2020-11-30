@@ -10,11 +10,10 @@ int main()
 
     Tree t = Tree();
 
-    t.InsertNode(4);
+    t.InsertNode(4).InsertNode(5).InsertNode(2).InsertNode(2).InsertNode(10).InsertNode(3).InsertNode(20);
 
-    TreeNode* root = t.GetRoot();
-    root.InsertChild(6);
+    int max = t.GetMax();
     
-    cout << t.GetCount();
+    cout << t.GetCount() << " " << max;
 }
 

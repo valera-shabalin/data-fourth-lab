@@ -7,16 +7,25 @@ class Tree
 private:
 	class TreeNode* Root;
 	size_t count;
+
+	void InsertNodeHelper(TreeNode& Root, int data);
 public:
 	/* Конструктор и деструктор */
 	Tree();
 	~Tree();
 
-	/* Основные методы */
+	/* Проверка на пустоту */
 	bool IsEmpty() const;
-	TreeNode& GetMax(TreeNode* Root = nullptr) const;
-	TreeNode& GetMin(TreeNode* Root = nullptr) const;
-	Tree& InsertNode(int value);
+
+	/* Поиск минимального и максимального значений */
+	int GetMax() const;
+	int GetMin() const;
+
+	/* Вставка узла в дерево */
+	Tree& InsertNode(int data);
+
+	/* Удаление узла из дерева */
+	Tree& DeleteNode();
 
 	/* Геттеры */
 	TreeNode* GetRoot() const;

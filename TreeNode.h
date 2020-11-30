@@ -13,16 +13,13 @@ public:
 	TreeNode(int data = 0);
 	~TreeNode();
 
-	/* Основные методы */
-	TreeNode& InsertChild(int value);
-
 	/* Геттеры */
 	int GetData() const;
-	TreeNode& GetLeftChild() const;
-	TreeNode& GetRightChild() const;
+	TreeNode* GetLeftChild() const;
+	TreeNode* GetRightChild() const;
 
 	/* Сеттеры */
-	TreeNode& SetData(int data);
+	TreeNode* SetData(int data);
 };
 
 #endif
