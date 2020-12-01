@@ -5,17 +5,25 @@
 
 using namespace std;
 
+bool Tree::debug = true;
+size_t Tree::static_id = 0;
+
 /* Конструктор */
 Tree::Tree() 
 {
 	this->Root = nullptr;
 	this->count = 0;
+	this->id = ++static_id;
+	if (debug) cout << "Конструктор " << this->id << endl;
 }
 
-/* Деструктор TODO */
+/* Деструктор */
 Tree::~Tree() 
 {
+	if (debug) cout << "Деструктор " << this->id << endl;
+	this->DeleteHelper(*this->Root);
 	this->count = 0;
+	this->id = 0;
 }
 
 /* Проверить дерево на пустоту */
@@ -67,36 +75,71 @@ Tree& Tree::InsertNode(int data)
 	return *this;
 }
 
-void Tree::InsertNodeHelper(TreeNode& Root, int data) 
+void Tree::InsertNodeHelper(TreeNode& Node, int data)
 {
-	if (data < Root.data)
+	if (data < Node.data)
 	{
-		if (Root.LeftChild != nullptr)
+		if (Node.LeftChild != nullptr)
 		{
-			InsertNodeHelper(*Root.LeftChild, data);
+			InsertNodeHelper(*Node.LeftChild, data);
 		}
 		else
 		{
-			Root.LeftChild = new TreeNode(data);
+			Node.LeftChild = new TreeNode(data);
 		}
 	}
 	else
 	{
-		if (Root.RightChild != nullptr)
+		if (Node.RightChild != nullptr)
 		{
-			InsertNodeHelper(*Root.RightChild, data);
+			InsertNodeHelper(*Node.RightChild, data);
 		}
 		else
 		{
-			Root.RightChild = new TreeNode(data);
+			Node.RightChild = new TreeNode(data);
 		}
 	}
 }
 
 /* Удалить элемент из дерева TODO */
-Tree& Tree::DeleteNode() 
+Tree& Tree::DeleteNode(int data) 
 {
 	return *this;
+}
+
+void Tree::DeleteHelper(TreeNode& Node) 
+{
+	if (&Node != nullptr)
+	{
+		DeleteHelper(*Node.RightChild);
+		DeleteHelper(*Node.LeftChild);
+		delete &Node;
+		this->count--;
+	}
+}
+
+/* Вывод дерева в консоль */
+void Tree::Print() const
+{
+	this->PrintHelper(*this->Root, 0);
+}
+
+void Tree::PrintHelper(const TreeNode& Node, size_t length) const 
+{
+	if (&Node != nullptr)
+	{
+		PrintHelper(*Node.RightChild, length + 1);
+		cout << "| ";
+		for (size_t i = 1; i <= length; i++) cout << "  ";
+		cout << Node.data << endl;
+		PrintHelper(*Node.LeftChild, length + 1);
+	}
+}
+
+/* Перегрузка оператора вывода */
+ostream& operator << (ostream& out, Tree& Tree) {
+	Tree.Print();
+	return out;
 }
 
 /* Геттеры */
