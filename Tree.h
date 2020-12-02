@@ -11,7 +11,8 @@ private:
 	static size_t static_id;
 
 	void InsertNodeHelper(TreeNode& Node, int data);
-	void DeleteHelper(TreeNode& Node);
+	void ClearHelper(TreeNode& Node);
+	int GetNodesSummHelper(const TreeNode& Node, int value) const;
 	void PrintHelper(const TreeNode& Node, size_t length) const;
 public:
 	/* Конструктор и деструктор */
@@ -30,6 +31,9 @@ public:
 
 	/* Удаление узла из дерева TODO */
 	Tree& DeleteNode(int data);
+
+	/* Подсчитать сумму нетерминальных узлов дерева */
+	int GetNodesSumm() const;
 
 	/* Вывод дерева в консоль */
 	void Print() const;

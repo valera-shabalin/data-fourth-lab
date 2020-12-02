@@ -10,10 +10,8 @@ int main()
 
     Tree t = Tree();
 
-    t.InsertNode(4).InsertNode(6).InsertNode(10).InsertNode(1);
+    t.InsertNode(4).InsertNode(6).InsertNode(10).InsertNode(1).InsertNode(20).InsertNode(0).InsertNode(26).InsertNode(5);
 
-
-    cout << t;
     
 }
 

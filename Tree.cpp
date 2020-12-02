@@ -8,6 +8,77 @@ using namespace std;
 bool Tree::debug = true;
 size_t Tree::static_id = 0;
 
+/* Вспомогательные методы */
+void Tree::InsertNodeHelper(TreeNode& Node, int data)
+{
+	if (data < Node.data)
+	{
+		if (Node.LeftChild != nullptr)
+		{
+			InsertNodeHelper(*Node.LeftChild, data);
+		}
+		else
+		{
+			Node.LeftChild = new TreeNode(data);
+		}
+	}
+	else
+	{
+		if (Node.RightChild != nullptr)
+		{
+			InsertNodeHelper(*Node.RightChild, data);
+		}
+		else
+		{
+			Node.RightChild = new TreeNode(data);
+		}
+	}
+}
+
+void Tree::ClearHelper(TreeNode& Node)
+{
+	if (&Node != nullptr)
+	{
+		ClearHelper(*Node.RightChild);
+		ClearHelper(*Node.LeftChild);
+		delete& Node;
+		this->count--;
+	}
+}
+
+int Tree::GetNodesSummHelper(const TreeNode& Node, int value) const
+{
+	if (Node.LeftChild == nullptr && Node.RightChild == nullptr)
+	{
+		return value;
+	}
+	else
+	{
+		value += Node.data;
+		if (Node.LeftChild != nullptr)
+		{
+			value =  GetNodesSummHelper(*Node.LeftChild, value);
+		}
+		if (Node.RightChild != nullptr)
+		{
+			value = GetNodesSummHelper(*Node.RightChild, value);
+		}
+	}
+	return value;
+}
+
+void Tree::PrintHelper(const TreeNode& Node, size_t length) const
+{
+	if (&Node != nullptr)
+	{
+		PrintHelper(*Node.RightChild, length + 1);
+		cout << "| ";
+		for (size_t i = 1; i <= length; i++) cout << "  ";
+		cout << Node.data << endl;
+		PrintHelper(*Node.LeftChild, length + 1);
+	}
+}
+
 /* Конструктор */
 Tree::Tree() 
 {
@@ -21,7 +92,7 @@ Tree::Tree()
 Tree::~Tree() 
 {
 	if (debug) cout << "Деструктор " << this->id << endl;
-	this->DeleteHelper(*this->Root);
+	this->ClearHelper(*this->Root);
 	this->count = 0;
 	this->id = 0;
 }
@@ -75,65 +146,24 @@ Tree& Tree::InsertNode(int data)
 	return *this;
 }
 
-void Tree::InsertNodeHelper(TreeNode& Node, int data)
-{
-	if (data < Node.data)
-	{
-		if (Node.LeftChild != nullptr)
-		{
-			InsertNodeHelper(*Node.LeftChild, data);
-		}
-		else
-		{
-			Node.LeftChild = new TreeNode(data);
-		}
-	}
-	else
-	{
-		if (Node.RightChild != nullptr)
-		{
-			InsertNodeHelper(*Node.RightChild, data);
-		}
-		else
-		{
-			Node.RightChild = new TreeNode(data);
-		}
-	}
-}
-
 /* Удалить элемент из дерева TODO */
 Tree& Tree::DeleteNode(int data) 
 {
+	
+
 	return *this;
 }
 
-void Tree::DeleteHelper(TreeNode& Node) 
+/* Подсчитать сумму нетерминальных узлов дерева TODO */
+int Tree::GetNodesSumm() const
 {
-	if (&Node != nullptr)
-	{
-		DeleteHelper(*Node.RightChild);
-		DeleteHelper(*Node.LeftChild);
-		delete &Node;
-		this->count--;
-	}
+	return this->GetNodesSummHelper(*this->Root, 0);
 }
 
 /* Вывод дерева в консоль */
 void Tree::Print() const
 {
 	this->PrintHelper(*this->Root, 0);
-}
-
-void Tree::PrintHelper(const TreeNode& Node, size_t length) const 
-{
-	if (&Node != nullptr)
-	{
-		PrintHelper(*Node.RightChild, length + 1);
-		cout << "| ";
-		for (size_t i = 1; i <= length; i++) cout << "  ";
-		cout << Node.data << endl;
-		PrintHelper(*Node.LeftChild, length + 1);
-	}
 }
 
 /* Перегрузка оператора вывода */
