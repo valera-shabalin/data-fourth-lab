@@ -48,21 +48,11 @@ void Tree::ClearHelper(TreeNode& Node)
 
 int Tree::GetNodesSummHelper(const TreeNode& Node, int value) const
 {
-	if (Node.LeftChild == nullptr && Node.RightChild == nullptr)
-	{
-		return value;
-	}
-	else
+	if (Node.LeftChild != nullptr || Node.RightChild != nullptr)
 	{
 		value += Node.data;
-		if (Node.LeftChild != nullptr)
-		{
-			value =  GetNodesSummHelper(*Node.LeftChild, value);
-		}
-		if (Node.RightChild != nullptr)
-		{
-			value = GetNodesSummHelper(*Node.RightChild, value);
-		}
+		value = (Node.LeftChild != nullptr) ? GetNodesSummHelper(*Node.LeftChild, value) : value;
+		value = (Node.RightChild != nullptr) ? GetNodesSummHelper(*Node.RightChild, value) : value;
 	}
 	return value;
 }
