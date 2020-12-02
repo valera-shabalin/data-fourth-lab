@@ -8,7 +8,7 @@ using namespace std;
 bool Tree::debug = true;
 size_t Tree::static_id = 0;
 
-/* Вспомогательные методы */
+/* Закрытие вспомогательные методы */
 void Tree::InsertNodeHelper(TreeNode& Node, int data)
 {
 	if (data < Node.data)
@@ -41,7 +41,9 @@ void Tree::ClearHelper(TreeNode& Node)
 	{
 		ClearHelper(*Node.RightChild);
 		ClearHelper(*Node.LeftChild);
+
 		delete& Node;
+
 		this->count--;
 	}
 }
@@ -54,6 +56,7 @@ int Tree::GetNodesSummHelper(const TreeNode& Node, int value) const
 		value = (Node.LeftChild != nullptr) ? GetNodesSummHelper(*Node.LeftChild, value) : value;
 		value = (Node.RightChild != nullptr) ? GetNodesSummHelper(*Node.RightChild, value) : value;
 	}
+
 	return value;
 }
 
@@ -62,9 +65,11 @@ void Tree::PrintHelper(const TreeNode& Node, size_t length) const
 	if (&Node != nullptr)
 	{
 		PrintHelper(*Node.RightChild, length + 1);
+
 		cout << "| ";
 		for (size_t i = 1; i <= length; i++) cout << "  ";
 		cout << Node.data << endl;
+
 		PrintHelper(*Node.LeftChild, length + 1);
 	}
 }
@@ -75,6 +80,7 @@ Tree::Tree()
 	this->Root = nullptr;
 	this->count = 0;
 	this->id = ++static_id;
+
 	if (debug) cout << "Конструктор " << this->id << endl;
 }
 
@@ -82,6 +88,7 @@ Tree::Tree()
 Tree::~Tree() 
 {
 	if (debug) cout << "Деструктор " << this->id << endl;
+
 	this->ClearHelper(*this->Root);
 	this->count = 0;
 	this->id = 0;
@@ -94,29 +101,29 @@ bool Tree::IsEmpty() const
 }
 
 /* Получить наибольший элемент в дереве */
-int Tree::GetMax() const
+TreeNode* Tree::GetMaxNode(TreeNode* Node) const
 {
-	TreeNode* Tmp = this->Root;
+	TreeNode* Tmp = (Node == nullptr) ? this->Root : Node;
 
 	while (Tmp->RightChild != nullptr)
 	{
 		Tmp = Tmp->RightChild;
 	}
 
-	return Tmp->data;
+	return Tmp;
 }
 
 /* Получить наименьший элемент в дереве */
-int Tree::GetMin() const
+TreeNode* Tree::GetMinNode(TreeNode* Node) const
 {
-	TreeNode* Tmp = this->Root;
+	TreeNode* Tmp = (Node == nullptr) ? this->Root : Node;
 
 	while (Tmp->LeftChild != nullptr)
 	{
 		Tmp = Tmp->LeftChild;
 	}
 
-	return Tmp->data;
+	return Tmp;
 }
 
 /* Вставить элемент в дерево */
@@ -136,14 +143,6 @@ Tree& Tree::InsertNode(int data)
 	return *this;
 }
 
-/* Удалить элемент из дерева TODO */
-Tree& Tree::DeleteNode(int data) 
-{
-	
-
-	return *this;
-}
-
 /* Подсчитать сумму нетерминальных узлов дерева TODO */
 int Tree::GetNodesSumm() const
 {
@@ -153,6 +152,7 @@ int Tree::GetNodesSumm() const
 /* Вывод дерева в консоль */
 void Tree::Print() const
 {
+	cout << endl;
 	this->PrintHelper(*this->Root, 0);
 }
 
@@ -171,4 +171,8 @@ TreeNode* Tree::GetRoot() const
 size_t Tree::GetCount() const
 {
 	return this->count;
+}
+
+size_t Tree::GetId() const {
+	return this->id;
 }

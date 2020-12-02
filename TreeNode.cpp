@@ -1,7 +1,8 @@
+#include <iostream>
+
 #include "TreeNode.h"
 
 using namespace std;
-
 
 /* Конструктор */
 TreeNode::TreeNode(int data) 

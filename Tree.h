@@ -23,14 +23,11 @@ public:
 	bool IsEmpty() const;
 
 	/* Поиск минимального и максимального значений */
-	int GetMax() const;
-	int GetMin() const;
+	TreeNode* GetMaxNode(TreeNode* Node = nullptr) const;
+	TreeNode* GetMinNode(TreeNode* Node = nullptr) const;
 
 	/* Вставка узла в дерево */
 	Tree& InsertNode(int data);
-
-	/* Удаление узла из дерева TODO */
-	Tree& DeleteNode(int data);
 
 	/* Подсчитать сумму нетерминальных узлов дерева */
 	int GetNodesSumm() const;
@@ -44,6 +41,7 @@ public:
 	/* Геттеры */
 	TreeNode* GetRoot() const;
 	size_t GetCount() const;
+	size_t GetId() const;
 };
 
 #endif
