@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool Tree::debug = true;
+bool Tree::debug = false;
 size_t Tree::static_id = 0;
 
 /* Закрытие вспомогательные методы */

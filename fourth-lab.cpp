@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <fstream>
 
 #include "Tree.h"
 
@@ -40,6 +41,8 @@ int main()
 
     int variable = 0, x = 0;
     size_t count = 0;
+    string fileName;
+    ifstream file;
 
     do {
         Tree tree = Tree();
@@ -51,7 +54,22 @@ int main()
         switch (variable) 
         {
         case 1:
-            cout << "Заполняем дерево из файла.";
+            cout << "Введите название файла: ";
+            
+            cin >> fileName;
+
+            file.open(fileName);
+
+            while (file >> x)
+            {
+                tree.InsertNode(x);
+            }
+
+            cout << "Полученное дерево: " << tree;
+            cout << "Сумма не терминальный узлов: " << tree.GetNodesSumm() << endl;
+            system("pause");
+
+            file.close();
             break;
         case 2:
             cout << "Введите нужное количество узлов в дереве: ";
