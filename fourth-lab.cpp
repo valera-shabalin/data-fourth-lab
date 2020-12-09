@@ -65,6 +65,8 @@ int main()
                 tree.InsertNode(x);
             }
 
+            tree.DeleteNode(32);
+
             cout << "Полученное дерево: " << tree;
             cout << "Сумма не терминальный узлов: " << tree.GetNodesSumm() << endl;
             system("pause");

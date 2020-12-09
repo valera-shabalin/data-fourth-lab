@@ -6,8 +6,7 @@ class TreeNode
 	friend class Tree;
 private:
 	int data;
-	TreeNode* LeftChild;
-	TreeNode* RightChild;
+	TreeNode *LeftChild, *RightChild;
 public:
 	/* Конструктор и деструктор */
 	TreeNode(int data = 0);

@@ -35,6 +35,52 @@ void Tree::InsertNodeHelper(TreeNode& Node, int data)
 	}
 }
 
+TreeNode* Tree::DeleteNodeHelper(TreeNode* Node, int data)
+{
+	if (Node == nullptr)
+	{
+		return nullptr;
+	}
+
+	if (data < Node->data)
+	{
+		Node->LeftChild = this->DeleteNodeHelper(Node->LeftChild, data);
+		return Node;
+	}
+	else if (data > Node->data)
+	{
+		Node->RightChild = this->DeleteNodeHelper(Node->RightChild, data);
+		return Node;
+	}
+	else if (Node->LeftChild != nullptr && Node->RightChild != nullptr)
+	{
+		TreeNode* Tmp = this->GetMaxNode(Node->LeftChild);
+		Node->data = Tmp->data;
+		Node->LeftChild = this->DeleteNodeHelper(Node->RightChild, Tmp->data);
+		return Node;
+	}
+	else
+	{
+		if (Node->LeftChild != nullptr)
+		{
+			TreeNode* Tmp = Node->LeftChild;
+			delete Node;
+			return Tmp;
+		}
+		else if (Node->RightChild != nullptr)
+		{
+			TreeNode* Tmp = Node->RightChild;
+			delete Node;
+			return Tmp;
+		}
+		else
+		{
+			delete Node;
+			return nullptr;
+		}
+	}
+}
+
 void Tree::ClearHelper(TreeNode& Node)
 {
 	if (&Node != nullptr)
@@ -71,6 +117,26 @@ void Tree::PrintHelper(const TreeNode& Node, size_t length) const
 		cout << Node.data << endl;
 
 		PrintHelper(*Node.LeftChild, length + 1);
+	}
+}
+
+void Tree::InOrderHelper(const TreeNode& Node) const
+{
+	if (&Node != nullptr)
+	{
+		/* Именно здесь мы что-то делаем с данными, например, выводим или ищем */
+		this->InOrderHelper(*Node.LeftChild);
+		this->InOrderHelper(*Node.RightChild);
+	}
+}
+
+void Tree::PreOrderHelper(const TreeNode& Node) const
+{
+	if (&Node != nullptr)
+	{
+		this->InOrderHelper(*Node.LeftChild);
+		this->InOrderHelper(*Node.RightChild);
+		/* Именно здесь мы что-то делаем с данными, например, выводим или ищем */
 	}
 }
 
@@ -143,6 +209,15 @@ Tree& Tree::InsertNode(int data)
 	return *this;
 }
 
+/* Удалить узел из дерева */
+Tree& Tree::DeleteNode(int data)
+{
+	this->DeleteNodeHelper(this->Root, data);
+	this->count--;
+
+	return *this;
+}
+
 /* Подсчитать сумму нетерминальных узлов дерева TODO */
 int Tree::GetNodesSumm() const
 {
@@ -154,6 +229,20 @@ void Tree::Print() const
 {
 	cout << endl;
 	this->PrintHelper(*this->Root, 0);
+}
+
+/* Прямой обход дерева */
+Tree& Tree::InOrder()
+{
+	this->InOrderHelper(*this->Root);
+	return *this;
+}
+
+/* Обратный обход дерева */
+Tree& Tree::PreOrder()
+{
+	this->PreOrderHelper(*this->Root);
+	return *this;
 }
 
 /* Перегрузка оператора вывода */
